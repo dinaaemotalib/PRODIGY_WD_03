@@ -1,6 +1,4 @@
 let title = document.querySelector('.title');
-let gameMode = 'multiplayer'; // Default game mode
-let board = [['', '', ''], ['', '', ''], ['', '', '']];
 let turn = 'X';
 let squares = [];
 function end(num1,num2,num3)
@@ -53,59 +51,23 @@ function winner()
 
 
 }
-function makeAIMove() {
-    // Minimax algorithm implementation to determine the best move for AI
-    // based on the current board state and return the index (row, column)
-  
-    // Example (replace with actual Minimax implementation)
-    let bestMove = [Math.floor(Math.random() * 3), Math.floor(Math.random() * 3)];
-    return bestMove;
-  }
 
-  function game(id) {
+
+function game(id)
+{
     let element = document.getElementById(id);
-    if (turn === 'X' && element.innerHTML === '') { // Human player (X) move
-      element.innerHTML = 'X';
-      turn = (gameMode === 'multiplayer') ? 'O' : 'AI'; // Switch turns based on game mode
-      title.innerHTML = (gameMode === 'multiplayer') ? 'O Turn' : 'AI\'s Turn';
-    } else if ((turn === 'O' && element.innerHTML === '') && gameMode === 'multiplayer') {
-      // Human player (O) move (only in multiplayer mode)
-      element.innerHTML = 'O';
-      turn = 'X';
-      title.innerHTML = 'X Turn';
+    if(turn === 'X' && element.innerHTML == '' ) // if it was x or empty
+    {
+        element.innerHTML = 'X';
+        turn = 'O';
+        title.innerHTML = 'O Turn'
     }
-  
-    winner();
-  
-    if (turn === 'AI' && gameMode === 'ai') { // AI's turn (only in AI mode)
-      let move = makeAIMove();
-      board[move[0]][move[1]] = 'O';
-      document.getElementById(`item${move[0] + 1}${move[1] + 1}`).innerHTML = 'O';
-      turn = 'X';
-      title.innerHTML = 'X Turn';
-    }
-  }
-  
-  const buttons = document.querySelectorAll('.choice button');
-  buttons.forEach(button => button.addEventListener('click', () => {
-    gameMode = button.id; // Set game mode based on clicked button
-    document.getElementById('gameBoard').innerHTML = ''; // Clear game board for new game
-    board = [['', '', ''], ['', '', ''], ['', '', '']]; // Reset board state
-    turn = 'X'; // Start with X always
-    title.innerHTML = 'X Turn'; // Display starting turn
-    createBoard(); // Recreate the game board squares
-  }));
-  
-  function createBoard() {
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        let square = document.createElement('div');
-        square.classList.add('square');
-        square.id = `item${i + 1}${j + 1}`;
-        square.addEventListener('click', () => game(square.id));
-        document.getElementById('gameBoard').appendChild(square);
-      }
-    }
-  }
-  
-  createBoard();
+    else if (turn === 'O' && element.innerHTML == '')
+        {
+            element.innerHTML = 'O';
+            turn = 'X';
+            title.innerHTML = 'X Turn'
+        }
+        winner();
+
+}
